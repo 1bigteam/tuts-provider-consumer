@@ -5,7 +5,7 @@ class LoginController extends ChangeNotifier {
   // Service should be of type Singleton (only one instance is created and used by the entire application)
   // The example here is not showing a singleton but rather instantiate a new instance
   // For simplicity sake, we will go with that
-  AuthService authService = AuthService();
+  AuthService _authService = AuthService();
 
   // Initialize the starting state to be Initial
   LoginState _state = LoginState.Initial;
@@ -18,7 +18,10 @@ class LoginController extends ChangeNotifier {
     // First update state loading
     _setState(LoginState.Loading);
 
-    bool result = await authService.loginWithEmail(mockResult);
+    // Process all business logic
+    bool result = await _authService.loginWithEmail(mockResult);
+
+    // Finally update state with result state
     result ? _setState(LoginState.Done) : _setState(LoginState.Error);
   }
 
